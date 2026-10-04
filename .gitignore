@@ -1,0 +1,93 @@
+# =====================================================================
+# AABC / HCP-Aging is registered-access data.
+#
+# No raw data, no derived participant-level file, and no per-participant
+# result may ever be committed to this repository. The rules below are
+# deliberately broad: it is better to have to force-add a file than to
+# publish one by accident.
+#
+# If you need to add something that matches a rule here, add it with
+#   git add -f <path>
+# and only after confirming it contains nothing participant-level.
+# =====================================================================
+
+# ---- data, in every form ---------------------------------------------
+data/
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.sav
+*.dta
+*.npy
+*.npz
+*.rds
+*.RData
+*.rda
+*.mat
+*.h5
+*.hdf5
+*.parquet
+*.feather
+*.nii
+*.nii.gz
+*.mgz
+*.gii
+*.zip
+*.7z
+*.tar
+*.tar.gz
+
+# ---- results, which are derived from the data ------------------------
+# Anchored with a leading slash so these match only at the repository root.
+# An unanchored "figures/" would also match code/figures/, which holds the
+# scripts that BUILD the figures and must be published.
+/results/
+/output/
+/outputs/
+/figures/
+*.log
+
+# ---- documents and slides --------------------------------------------
+# Kept out because thesis drafts routinely carry participant numbers,
+# individual data points and unpublished results in figures.
+*.docx
+*.doc
+*.pptx
+*.ppt
+*.pdf
+
+# ---- R ---------------------------------------------------------------
+.Rhistory
+.Rapp.history
+.Rproj.user/
+*.Rproj
+.Renviron
+renv/library/
+renv/staging/
+
+# ---- Python ----------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# ---- editors and operating systems -----------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*~
+.~lock.*
+
+# ---- credentials -----------------------------------------------------
+.env
+*.pem
+*.key
+credentials*
+secrets*

@@ -1,0 +1,6 @@
+# Normalise line endings so Windows-authored and Unix-authored scripts do not
+# show as wholly modified in diffs.
+* text=auto eol=lf
+*.R   text eol=lf
+*.py  text eol=lf
+*.md  text eol=lf
