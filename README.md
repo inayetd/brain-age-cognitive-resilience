@@ -144,15 +144,40 @@ Rscript code/sem/06_h3_single.R
 Rscript code/sem/08_multiplicity.R
 ```
 
-`FUNCTIONAL_TAG` selects which functional run is used downstream. `pca` is the
-pre-specified primary specification; `nopca` is the sensitivity run on the
-unreduced tangent features.
+### The run tag
+
+**Every reported result comes from one run: `pca_it50`.** Use that tag and
+nothing else to reproduce the thesis.
+
+`FUNCTIONAL_TAG` is read by scripts in both languages, but it names two
+different things depending on where you are in the chain, and this is the one
+place the pipeline is easy to misread:
+
+| where | what the variable names | values |
+|---|---|---|
+| `03_impute.R`, `03b_convergence.R` | the functional **pipeline** | `pca` (pre-specified) or `nopca` (sensitivity) |
+| `04`–`08`, and the figure scripts | the **imputation run** | `pca_it50` |
+
+`03_impute.R` combines the pipeline name with its iteration count and writes
+its output under that combined name, so the file it produces for the
+pre-specified pipeline is `mice_pca_it50_*.rds`. Everything downstream
+addresses files by the **run** name. The R scripts from `04` onward therefore
+default to `pca_it50`, not to `pca`.
 
 ```bash
+# the reported analysis
+Rscript code/sem/04_h1_base.R                      # defaults to pca_it50
+
+# the unreduced-features sensitivity run
 FUNCTIONAL_TAG=nopca python code/brain_age/06_merge_bags.py
 ```
 
-R scripts read the same variable through `Sys.getenv("FUNCTIONAL_TAG")`.
+**Why 50 iterations and not the 20 in the analysis plan.** At 20 iterations
+perceived stress had a Gelman–Rubin PSRF of 1.07, above the 1.05 criterion; at
+50 it was 1.02, with every other imputed variable below 1.01. Only the
+iteration count changed — no method, no variable, no model. A 20-iteration run
+exists in the project history and is superseded; it is not reproduced here and
+no reported number comes from it.
 
 See [`docs/PIPELINE.md`](docs/PIPELINE.md) for the full run order including
 sensitivity analyses.

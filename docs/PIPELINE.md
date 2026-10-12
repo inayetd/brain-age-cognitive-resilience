@@ -270,7 +270,14 @@ bivariate association without any of them being null.
 The gap stays **in years** here, so coefficients read directly as years of brain
 age per standard deviation of the exposure.
 
-`05b_h2_joint.R` fits the joint version as a sensitivity analysis.
+**Which specification is confirmatory.** `05b_h2_joint.R` enters all six
+exposures simultaneously, and **that is the confirmatory test**: the
+preregistration (Dincer, Kristanto & Hildebrandt, September 2025) states that
+"the predictor coefficients from the simultaneous H2 and H3 models will
+constitute the confirmatory tests" and that single-predictor models "will be
+reported only as supplementary descriptive analyses". `05_h2_single.R` is
+therefore the supplementary one, despite what its own header says — see the
+known deviation noted under Stage 6.
 
 ### `06_h3_single.R` — what relates to resilience?
 
@@ -290,7 +297,9 @@ the measurement model carry the reliability of the outcome.
 
 The gap is standardised here, unlike in H2.
 
-`06b_h3_joint.R` is the joint sensitivity version.
+`06b_h3_joint.R` enters all six exposures simultaneously and, as for H2, **is
+the confirmatory specification**. `06_h3_single.R` is supplementary and
+descriptive.
 
 ---
 
@@ -321,6 +330,35 @@ them would mean a finding about cognition changes its status according to how
 many lifestyle variables happened to be measured. Family definitions should
 follow the inferential structure, not the spreadsheet.
 
+### Known deviation — which rows `08_multiplicity.R` corrects
+
+`08_multiplicity.R` as committed reads `h2_single_estimates_*.csv` and
+`h3_estimates_*.csv`, that is the **single-predictor** models, and the headers of
+`05b_h2_joint.R` and `06b_h3_joint.R` describe themselves as sensitivity
+analyses. Both reflect an earlier draft of the analysis plan, in which the
+single-predictor models were confirmatory.
+
+The registered plan that was followed reverses this: the twelve tests in each
+Benjamini-Hochberg family are the **simultaneous** coefficients, and the
+single-predictor models are supplementary. The confirmatory *q* values reported
+in the thesis are therefore computed over the twelve joint coefficients, not
+over the rows in `multiplicity_*.csv`.
+
+This changes no conclusion. Household income is the only exposure to survive
+correction, in both modalities and in both outcomes, under either family
+definition:
+
+| | single | joint |
+|---|---|---|
+| H2 structural | −0.98 (*q* < .001) | −0.93 (*q* < .001) |
+| H2 functional | −0.82 (*q* = .038) | −0.85 (*q* = .028) |
+| H3 structural | +0.104 (*q* = .004) | +0.099 (*q* = .008) |
+| H3 functional | +0.119 (*q* = .001) | +0.114 (*q* = .003) |
+
+The scripts are left byte-identical to the versions that produced the results,
+because each one records its own MD5 in its provenance file and editing a
+comment would break that chain. The deviation is recorded here instead.
+
 ---
 
 ## Sensitivity analyses
@@ -337,9 +375,26 @@ follow the inferential structure, not the spreadsheet.
 
 ## Conventions
 
-**`FUNCTIONAL_TAG`** selects the functional run used downstream — `pca`
-(pre-specified primary) or `nopca` (sensitivity). Read from the environment in
-both languages, so the same variable drives the whole chain.
+**The run tag.** Every reported result comes from one run, `pca_it50`.
+
+`FUNCTIONAL_TAG` is read from the environment in both languages, but it names
+two different things depending on where you are in the chain:
+
+| where | what it names | values |
+|---|---|---|
+| `03_impute.R`, `03b_convergence.R` | the functional **pipeline** | `pca` (pre-specified) or `nopca` (sensitivity) |
+| `04`–`08`, figure scripts | the **imputation run** | `pca_it50` |
+
+`03_impute.R` appends the iteration count to the pipeline name and writes
+`mice_pca_it50_*.rds`. Everything downstream addresses files by that combined
+run name, which is why the R scripts from `04` onward default to `pca_it50`
+rather than `pca`. Passing `FUNCTIONAL_TAG=pca` to `04` would send it looking
+for files that do not exist.
+
+The analysis plan specified 20 iterations. Perceived stress had not converged
+there (PSRF 1.07 against a 1.05 criterion) and had at 50 (1.02), so the
+reported run uses 50. Only the iteration count differs. The 20-iteration run is
+superseded and no reported number comes from it.
 
 **Provenance files.** Every R script writes a `*_provenance_*.txt` recording the
 seed, package versions, and the checksum of the script itself. The multiplicity
