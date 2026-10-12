@@ -24,11 +24,21 @@ structural morphometry and from resting-state functional connectivity.
 
 Three questions follow:
 
-| | question | model |
+| | question | confirmatory model |
 |---|---|---|
 | **H1** | Does the gap relate to cognition at all? | latent *g* ~ BAG + age + sex + education |
-| **H2** | What is associated with the gap itself? | BAG ~ X + age + sex + education |
-| **H3** | What is associated with resilience? | latent *g* ~ BAG + X + age + sex + education |
+| **H2** | What is associated with the gap itself? | BAG ~ X₁ + … + X₆ + age + sex + education |
+| **H3** | What is associated with resilience? | latent *g* ~ BAG + X₁ + … + X₆ + age + sex + education |
+| **H4** | Does any of this depend on the modality? | exploratory; both gaps in one model |
+
+X₁ … X₆ are household income, sleep quality, physical activity, psychological
+well-being, social connectedness and perceived stress. Every hypothesis is
+tested once per modality and support is reported separately for each.
+
+**All six exposures enter H2 and H3 simultaneously**, so each coefficient is the
+unique association of that exposure after the other five and the covariates.
+Single-exposure versions of both models are also fitted and reported, but as
+supplementary descriptive analyses; they do not determine confirmatory support.
 
 In the terminology of Bocancea et al. (2021), H2 measures **resistance** — the
 mismatch between risk factors and brain integrity — and H3 measures
@@ -59,10 +69,10 @@ code/
     03_impute.R                  multiple imputation, 50 datasets
     03b_convergence.R            imputation diagnostics
     04_h1_base.R                 H1
-    05_h2_single.R               H2 primary, one exposure per model
-    05b_h2_joint.R               H2 sensitivity, all exposures together
-    06_h3_single.R               H3 primary
-    06b_h3_joint.R               H3 sensitivity
+    05_h2_single.R               H2 supplementary, one exposure per model
+    05b_h2_joint.R               H2 CONFIRMATORY, all six together
+    06_h3_single.R               H3 supplementary, one exposure per model
+    06b_h3_joint.R               H3 CONFIRMATORY, all six together
     08_multiplicity.R            Bonferroni and Benjamini-Hochberg
 
   figures/       figures and tables for the thesis and presentation
@@ -139,10 +149,23 @@ Rscript code/sem/02_cfa_psychosocial_factors.R
 Rscript code/sem/03_impute.R                    # about 20 minutes
 Rscript code/sem/03b_convergence.R
 Rscript code/sem/04_h1_base.R
-Rscript code/sem/05_h2_single.R
-Rscript code/sem/06_h3_single.R
+Rscript code/sem/05b_h2_joint.R                 # H2 confirmatory
+Rscript code/sem/06b_h3_joint.R                 # H3 confirmatory
+Rscript code/sem/05_h2_single.R                 # supplementary
+Rscript code/sem/06_h3_single.R                 # supplementary
 Rscript code/sem/08_multiplicity.R
 ```
+
+> **One known deviation.** `08_multiplicity.R` builds its Benjamini-Hochberg
+> families from the single-exposure files, and the headers of `05b` and `06b`
+> still describe themselves as sensitivity analyses. Both date from an earlier
+> draft of the analysis plan in which the single-exposure models were
+> confirmatory. The registered plan reverses this, and the confirmatory *q*
+> values reported in the thesis are computed over the twelve simultaneous
+> coefficients. Household income is the only exposure to survive correction
+> under either definition. The scripts are left unedited so that the MD5
+> recorded in each provenance file still verifies; see
+> [`docs/PIPELINE.md`](docs/PIPELINE.md).
 
 ### The run tag
 
