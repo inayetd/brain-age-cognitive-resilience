@@ -51,12 +51,6 @@ OUTPUT   ../../data/clean/bag_sensitivity.csv
 The residualised columns are inputs to the R sensitivity models; producing them is not
 the sensitivity analysis.
 """
-# ============================================================================
-# Step 7 of 8. Sensitivity quantities only; changes nothing in the primary analysis.
-# Adds an alternative age-bias correction (residualised rather than rescaled) and
-# the per-participant stability of the gap across the ten repeated partitions.
-# Nothing downstream depends on this script.
-# ============================================================================
 import os, sys, numpy as np, pandas as pd
 
 WORK = os.path.dirname(os.path.abspath(__file__))

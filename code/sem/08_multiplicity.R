@@ -1,13 +1,3 @@
-# ====================================================================
-# Multiplicity. Run last, after H1, H2 and H3.
-# Applies the pre-specified corrections and records the checksum of every input
-# file, so that the corrected values can be traced to the exact result files they
-# came from. H1 is a family of two under Bonferroni; H2 and H3 are separate
-# families of twelve under Benjamini-Hochberg, because they ask different
-# questions and a finding about cognition should not change status according to
-# how many lifestyle variables happened to be measured.
-# ====================================================================
-
 # =====================================================================
 # Multiplicity correction across the hypothesis families
 #
@@ -72,7 +62,21 @@
 #         results/sem/multiplicity_log_<TAG>.txt
 # =====================================================================
 
-TAG  <- Sys.getenv("FUNCTIONAL_TAG", "pca")
+# FUNCTIONAL_TAG carries two different meanings in this pipeline, and the
+# difference is the reason a run can silently read the wrong imputation.
+#
+#   In 03_impute.R and 03b_convergence.R it names the functional PIPELINE
+#   ("pca" or "nopca"), and those scripts then derive RUN by appending the
+#   iteration count when N_ITER differs from the pre-specified 20. With
+#   N_ITER = 50 the objects are written as mice_pca_it50_*.rds.
+#
+#   Here it names the RUN, so it must equal that full name. The default is
+#   therefore "pca_it50": the 50-iteration imputation is the one the thesis
+#   uses, and it should not require anyone to know about an environment
+#   variable to reproduce. Set FUNCTIONAL_TAG explicitly to read a different
+#   run, for example the superseded 20-iteration objects ("pca") or the
+#   unreduced functional features ("nopca_it50").
+TAG  <- Sys.getenv("FUNCTIONAL_TAG", "pca_it50")
 ROOT <- "C:/Users/inaye/Desktop/MASTERTHESIS"
 RES  <- file.path(ROOT, "results", "sem")
 

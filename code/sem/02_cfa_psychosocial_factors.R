@@ -1,11 +1,3 @@
-# ====================================================================
-# Measurement model 2 of 2.
-# Establishes two correlated latent exposures, psychological well-being and social
-# connectedness. Perceived stress has a single indicator and therefore enters the
-# structural models as an observed variable instead.
-# These factors are two of the six exposures in H2 and H3.
-# ====================================================================
-
 # =====================================================================
 # CFA3 - Psychosocial measurement model
 #

@@ -1,12 +1,3 @@
-# ====================================================================
-# Measurement model 1 of 2. Run before any hypothesis test.
-# Establishes latent general cognitive performance from seven indicators. The
-# bifactor-(S-1) form anchors the general factor to the two processing-speed tasks,
-# so that the executive and memory factors describe what those domains share beyond
-# speed rather than an uninterpretable residual.
-# This general factor is the outcome in H1 and H3.
-# ====================================================================
-
 # =====================================================================
 # CFA1 / CFA2 - Latent cognitive performance
 #

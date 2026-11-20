@@ -14,12 +14,6 @@ FUNCTIONAL_TAG selects which functional run is merged. 'pca' is the primary spec
 environment variable FUNCTIONAL_TAG=nopca to build the sensitivity table instead; the
 tag is carried into the output filename, so the two runs cannot overwrite each other.
 """
-# ============================================================================
-# Step 6 of 8. Joins the two gaps to the phenotype.
-# Produces the one table every R script reads. Also reports how far the two gaps
-# agree with each other, which is the descriptive part of H4.
-# Run before: any script in code/sem/.
-# ============================================================================
 import os, sys, numpy as np, pandas as pd
 from scipy.stats import spearmanr
 

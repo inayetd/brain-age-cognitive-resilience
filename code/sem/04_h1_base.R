@@ -1,12 +1,3 @@
-# ====================================================================
-# H1. Does the brain-age gap relate to cognition at all?
-# Latent general cognition regressed on the gap plus age, sex and education, fitted
-# separately per modality. The executive and memory factors are regressed on the
-# same predictors so that the specificity of the association is observed rather
-# than assumed.
-# If H1 were null, H3 would have nothing to be a residual of.
-# ====================================================================
-
 # =====================================================================
 # H1 - Brain age gap and latent cognitive performance
 #
@@ -67,7 +58,21 @@
 library(lavaan)
 library(lavaan.mi)
 
-TAG  <- Sys.getenv("FUNCTIONAL_TAG", "pca")
+# FUNCTIONAL_TAG carries two different meanings in this pipeline, and the
+# difference is the reason a run can silently read the wrong imputation.
+#
+#   In 03_impute.R and 03b_convergence.R it names the functional PIPELINE
+#   ("pca" or "nopca"), and those scripts then derive RUN by appending the
+#   iteration count when N_ITER differs from the pre-specified 20. With
+#   N_ITER = 50 the objects are written as mice_pca_it50_*.rds.
+#
+#   Here it names the RUN, so it must equal that full name. The default is
+#   therefore "pca_it50": the 50-iteration imputation is the one the thesis
+#   uses, and it should not require anyone to know about an environment
+#   variable to reproduce. Set FUNCTIONAL_TAG explicitly to read a different
+#   run, for example the superseded 20-iteration objects ("pca") or the
+#   unreduced functional features ("nopca_it50").
+TAG  <- Sys.getenv("FUNCTIONAL_TAG", "pca_it50")
 ROOT <- "C:/Users/inaye/Desktop/MASTERTHESIS"
 IND  <- file.path(ROOT, "data", "clean")
 RES  <- file.path(ROOT, "results", "sem")

@@ -28,13 +28,6 @@ FILES DELIBERATELY NOT USED
                                      requires loneliness, the wrong seven scales.
   V1_AllScores.csv                   spreadsheet-damaged columns.
 """
-# ============================================================================
-# Step 3 of 8. The single point where participants are selected.
-# Every merge, recode and exclusion happens here and nowhere else, so that the
-# measurement models, the brain-age models and the hypothesis tests all describe
-# the same people. Downstream scripts never reopen a raw release file.
-# Run before: everything else.
-# ============================================================================
 import os, sys, numpy as np, pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__))

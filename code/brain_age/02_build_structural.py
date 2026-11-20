@@ -11,13 +11,6 @@ Outputs (in this directory):
     struct_cols.json  feature names
     struct_meta.json  the participant IDs actually matched
 """
-# ============================================================================
-# Step 2 of 8. Independent of step 1; either may run first.
-# Assembles the 1,500 structural features (cortical thickness, surface area, cortical
-# volume and a T1w/T2w myelin proxy over 360 Glasser regions, plus 60 subcortical
-# volumes) and the intracranial volume used later to remove head-size effects.
-# Run before: 05_structural_bag.py
-# ============================================================================
 import re, numpy as np, pandas as pd, json
 import os as _os
 HERE=_os.path.dirname(_os.path.abspath(__file__))

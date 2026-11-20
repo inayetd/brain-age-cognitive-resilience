@@ -50,12 +50,6 @@ RUNTIME
 OUTPUT  ../../results/depth_diagnostic.csv
         and a table printed to the console
 """
-# ============================================================================
-# Step 8 of 8. Diagnostic only.
-# The inner loop selected the smallest tree depth on the grid in every one of the
-# 300 folds. This script asks whether an even smaller depth would have been chosen
-# if it had been offered, which is the honest way to report a grid boundary.
-# ============================================================================
 import importlib.util
 import json
 import os

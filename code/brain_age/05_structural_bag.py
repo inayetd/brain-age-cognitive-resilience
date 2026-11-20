@@ -29,13 +29,6 @@ INPUTS   Xstruct.npy, icv.npy, volmask.npy, struct_cols.json  from 02_build_stru
          ../../data/clean/analysis_phenotype.csv              from 03_build_phenotype.py
 OUTPUT   bag_structural.csv, bag_structural_metrics.json
 """
-# ============================================================================
-# Step 5 of 8. Produces the structural brain-age gap.
-# The cross-validation machinery is identical to step 4 by design, so that any
-# difference between the two modalities reflects the features rather than the
-# pipeline. The only structural-specific step is the head-size adjustment.
-# Feeds: H1, H2 and H3 for the structural modality.
-# ============================================================================
 import json, os, re, sys, warnings, numpy as np, pandas as pd
 from sklearn.model_selection import StratifiedKFold, GroupKFold
 from sklearn.metrics import r2_score, mean_absolute_error

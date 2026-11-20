@@ -1,9 +1,3 @@
-# ====================================================================
-# Diagnostic for the imputation. Does not impute or model anything.
-# Reports whether the chained-equations chains mixed. Kept separate so a plotting
-# failure cannot cost a twenty-minute imputation run.
-# ====================================================================
-
 # =====================================================================
 # Convergence diagnostics for the multiple imputation
 #

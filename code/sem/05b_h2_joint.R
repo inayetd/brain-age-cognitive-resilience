@@ -1,10 +1,3 @@
-# ====================================================================
-# H2, SENSITIVITY. The same six exposures entered simultaneously.
-# Answers a different question from 05: each coefficient is now the association
-# unique to that exposure. Reported to show that the primary finding does not
-# depend on the one-at-a-time specification.
-# ====================================================================
-
 # =====================================================================
 # H2, SENSITIVITY - Lifestyle and psychosocial correlates of the brain
 #                   age gap, all six exposures entered together
@@ -94,7 +87,21 @@
 library(lavaan)
 library(lavaan.mi)
 
-TAG  <- Sys.getenv("FUNCTIONAL_TAG", "pca")
+# FUNCTIONAL_TAG carries two different meanings in this pipeline, and the
+# difference is the reason a run can silently read the wrong imputation.
+#
+#   In 03_impute.R and 03b_convergence.R it names the functional PIPELINE
+#   ("pca" or "nopca"), and those scripts then derive RUN by appending the
+#   iteration count when N_ITER differs from the pre-specified 20. With
+#   N_ITER = 50 the objects are written as mice_pca_it50_*.rds.
+#
+#   Here it names the RUN, so it must equal that full name. The default is
+#   therefore "pca_it50": the 50-iteration imputation is the one the thesis
+#   uses, and it should not require anyone to know about an environment
+#   variable to reproduce. Set FUNCTIONAL_TAG explicitly to read a different
+#   run, for example the superseded 20-iteration objects ("pca") or the
+#   unreduced functional features ("nopca_it50").
+TAG  <- Sys.getenv("FUNCTIONAL_TAG", "pca_it50")
 ROOT <- "C:/Users/inaye/Desktop/MASTERTHESIS"
 IND  <- file.path(ROOT, "data", "clean")
 RES  <- file.path(ROOT, "results", "sem")

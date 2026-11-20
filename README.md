@@ -73,7 +73,9 @@ code/
     05b_h2_joint.R               H2 CONFIRMATORY, all six together
     06_h3_single.R               H3 supplementary, one exposure per model
     06b_h3_joint.R               H3 CONFIRMATORY, all six together
-    08_multiplicity.R            Bonferroni and Benjamini-Hochberg
+    08_multiplicity.R            H1 Bonferroni; BH for the single-exposure models
+    08b_multiplicity_joint.R     BH for the confirmatory joint H2 and H3 models
+    09_h4_modality.R             H4 exploratory, both gaps in one model
 
   figures/       figures and tables for the thesis and presentation
 
@@ -153,19 +155,25 @@ Rscript code/sem/05b_h2_joint.R                 # H2 confirmatory
 Rscript code/sem/06b_h3_joint.R                 # H3 confirmatory
 Rscript code/sem/05_h2_single.R                 # supplementary
 Rscript code/sem/06_h3_single.R                 # supplementary
-Rscript code/sem/08_multiplicity.R
+Rscript code/sem/08_multiplicity.R              # H1 (Bonferroni); single models (BH)
+Rscript code/sem/08b_multiplicity_joint.R       # H2, H3 confirmatory (BH)
+Rscript code/sem/09_h4_modality.R               # H4 exploratory
 ```
 
-> **One known deviation.** `08_multiplicity.R` builds its Benjamini-Hochberg
-> families from the single-exposure files, and the headers of `05b` and `06b`
-> still describe themselves as sensitivity analyses. Both date from an earlier
-> draft of the analysis plan in which the single-exposure models were
-> confirmatory. The registered plan reverses this, and the confirmatory *q*
-> values reported in the thesis are computed over the twelve simultaneous
-> coefficients. Household income is the only exposure to survive correction
-> under either definition. The scripts are left unedited so that the MD5
-> recorded in each provenance file still verifies; see
-> [`docs/PIPELINE.md`](docs/PIPELINE.md).
+**Starting from the merged analysis table.** Steps 1 and 2 need the imaging
+data. With `data/clean/analysis_table_pca.csv` (the output of `06_merge_bags.py`:
+phenotype, exposures, covariates and both brain-age gaps) already in place,
+start at step 3; `03_impute.R` reads that table.
+
+> **Which multiplicity correction is confirmatory.** The confirmatory H2 and
+> H3 models are the joint models (`05b`, `06b`); their twelve-test
+> Benjamini-Hochberg correction is computed by `08b_multiplicity_joint.R` and
+> matches the *q* values in the figures. `08_multiplicity.R` applies the same
+> correction to the supplementary single-exposure models and holds the H1
+> Bonferroni test. The headers of `05b` and `06b` still describe them as
+> sensitivity analyses; they date from an earlier draft and are left unedited
+> so that the MD5 in each provenance file still verifies. Household income is
+> the only exposure to survive correction under either definition.
 
 ### The run tag
 
@@ -214,7 +222,8 @@ ROOT <- "C:/Users/inaye/Desktop/MASTERTHESIS"
 ```
 
 Change this to your own path in each script under `code/sem/`, or set it once in
-your `.Rprofile`. The Python scripts resolve their paths relative to the script
+your `.Rprofile`. `08b_multiplicity_joint.R` and `09_h4_modality.R` instead
+read the environment variable `PROJECT_ROOT` (default: the path above). The Python scripts resolve their paths relative to the script
 location and need no change.
 
 The code is published exactly as it was run for the thesis, so this path is left
@@ -227,7 +236,7 @@ as it was rather than refactored after the fact.
 **Python 3.11+** — numpy, pandas, scipy, scikit-learn, lightgbm, matplotlib.
 Full versions in `requirements.txt`.
 
-**R 4.3+** — lavaan, semTools, mice, dplyr.
+**R 4.3+** — lavaan, lavaan.mi, mice. The reported run used R 4.5.2, lavaan 0.7.2, mice 3.19.0; imputation seed 2026.
 
 ---
 

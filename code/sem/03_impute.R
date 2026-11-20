@@ -1,12 +1,3 @@
-# ====================================================================
-# Missing data. Run after the measurement models, before the hypothesis tests.
-# Household income is 25% missing and is the variable carrying the main finding, so
-# how it is handled matters. Chained equations impute the observed predictors; the
-# latent indicators are deliberately restored to missing afterwards and handled by
-# full-information maximum likelihood inside lavaan instead.
-# Produces the 50 completed datasets that every hypothesis test pools over.
-# ====================================================================
-
 # =====================================================================
 # MI - multiple imputation of the observed external predictors
 #

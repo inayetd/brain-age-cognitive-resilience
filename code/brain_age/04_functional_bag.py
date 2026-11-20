@@ -35,14 +35,6 @@ OUTPUTS   TAG is 'pca' or 'nopca'
     bag_metrics_TAG.json     per-fold and per-seed accuracy, selected hyperparameters,
                              error by age band, Karcher convergence, shrinkage report
 """
-# ============================================================================
-# Step 4 of 8. Produces the functional brain-age gap.
-# This is the script to read if you want to check for leakage. Every quantity
-# estimated from data - the tangent-space reference, the scaler, the PCA basis and
-# the age-bias coefficients - is fitted inside fit_preprocessing() and inside the
-# cross-fitting block, both of which only ever see training participants.
-# Feeds: H1, H2 and H3 for the functional modality.
-# ============================================================================
 import json, os, re, sys, warnings, numpy as np, pandas as pd
 from sklearn.model_selection import StratifiedKFold, GroupKFold
 from sklearn.metrics import r2_score, mean_absolute_error

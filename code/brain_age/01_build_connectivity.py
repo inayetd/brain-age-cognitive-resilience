@@ -11,13 +11,6 @@ Outputs (in this directory):
     corr_V1.npy   (N, 379, 379) float32
     meta.json     {"rois": [...379], "ids": [...N]}
 """
-# ============================================================================
-# Step 1 of 8 in the brain-age pipeline. Run first.
-# Reads the released seed-wise resting-state files and assembles one 379x379
-# connectivity matrix per participant. No modelling, no exclusions, no statistics:
-# this script only reshapes the release into an array the later steps can use.
-# Run before: 04_functional_bag.py
-# ============================================================================
 import os, sys, json, numpy as np, pandas as pd
 
 # --- path to the released correlation folder ----------------------------------
